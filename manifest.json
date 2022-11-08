@@ -4,5 +4,10 @@
             "module_name": "@minecraft/server",
             "version": "1.0.0-beta"
         }
-    ]
+    ],
+    "metadata": {
+        "authors": ["PrairieFire2b"],
+        "license": "MIT",
+        "url": "https://github.com/PrairieFire2b/minecraft-ex"
+    }
 }
