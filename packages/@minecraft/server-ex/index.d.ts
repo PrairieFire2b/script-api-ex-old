@@ -109,6 +109,7 @@ export interface EventSignal<T extends Event = any> {
 }
 
 export class PlayerDieEvent implements Event {
+    cause?: EntityDamageCause;
     player?: Player;
 }
 

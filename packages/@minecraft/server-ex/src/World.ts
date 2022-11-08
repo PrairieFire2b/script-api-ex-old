@@ -1,4 +1,4 @@
-import Events from "./Events";
+import Events from "./Events/index";
 
 export class World {
     events = new Events;
