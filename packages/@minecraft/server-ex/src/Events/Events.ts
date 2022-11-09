@@ -2,14 +2,15 @@ import * as server from "@minecraft/server";
 import { BeforeFlintIgniteEventSignal } from "./BeforeFlintIgniteEvent";
 import { BeforePlayerFishEventSignal } from "./BeforePlayerFish";
 import { BeforePlayerSleepEventSignal } from "./BeforePlayerSleep";
+import { CrystalExplodeTriggerEventSignal } from "./CrystalExplodeTriggerEvent";
 import { EntityDieEventSignal } from "./EntityDieEvent";
 import { PlayerDieEventSignal } from "./PlayerDieEvent";
 import { PlayerFishEventSignal } from "./PlayerFishEvent";
 import { PlayerShootEventSignal } from "./PlayerShootEvent";
 import { PlayerSwitchDimensionEventSignal } from "./PlayerSwitchDimensionEvent";
-import { EventSignal } from "./types";
+import { EventSignal, TriggerEventSignal } from "./types";
 
-export default class Events {
+export class Events {
     [eventName: string | keyof server.Events]: EventSignal | Function;
     readonly beforeChat = server.world.events.beforeChat;
     readonly beforeDataDrivenEntityTriggerEvent = server.world.events.beforeDataDrivenEntityTriggerEvent;
@@ -56,6 +57,14 @@ export default class Events {
     readonly weatherChange = server.world.events.weatherChange;
     readonly worldInitialize = server.world.events.worldInitialize;
     registerEventSignal<T extends EventSignal>(eventName: string, eventSignal: T) {
+        if(!(eventName in this)) this[eventName] = eventSignal;
+    }
+}
+
+export class TriggerEvents {
+    [eventName: string]: TriggerEventSignal | Function;
+    readonly crystalExplode = new CrystalExplodeTriggerEventSignal;
+    registerEventSignal<T extends TriggerEventSignal>(eventName: string, eventSignal: T) {
         if(!(eventName in this)) this[eventName] = eventSignal;
     }
 }

@@ -19,7 +19,7 @@ export class PlayerFishEventSignal implements EventSignal<PlayerFishEvent> {
             }
         });
         world.events.entityCreate.subscribe(arg => {
-            if(arg.entity.typeId === MinecraftEntityTypes.fishingHook.id) {
+            if(event && arg.entity.typeId === MinecraftEntityTypes.fishingHook.id) {
                 if(location.isNear(arg.entity.headLocation, 0.36)) {
                     event.entity = arg.entity;
                     this.#callbacks.forEach(callback => callback(event));

@@ -12,14 +12,12 @@ export class EntityDieEventSignal implements EventSignal<EntityDieEvent> {
         let component;
         let event: EntityDieEvent;
         world.events.entityHurt.subscribe((arg) => {
-            component = arg.hurtEntity.getComponent("minecraft:health")
-            if(component instanceof EntityHealthComponent) {
-                if(component.current <= 0) {
-                    event = new EntityDieEvent;
-                    event.cause = arg.cause;
-                    event.entity = arg.hurtEntity;
-                    this.#callbacks.forEach(callback => callback(event));
-                }
+            component = arg.hurtEntity.getComponent("minecraft:health");
+            if(component instanceof EntityHealthComponent && component.current <= 0) {
+                event = new EntityDieEvent;
+                event.cause = arg.cause;
+                event.entity = arg.hurtEntity;
+                this.#callbacks.forEach(callback => callback(event));
             }
         })
     }

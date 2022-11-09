@@ -11,7 +11,7 @@ export class BeforePlayerFishEventSignal implements EventSignal<BeforePlayerFish
     constructor() {
         let event: BeforePlayerFishEvent;
         world.events.beforeItemUse.subscribe(arg => {
-            if(arg.item.typeId === MinecraftItemTypes.fishingRod.id && event) {
+            if(event && arg.item.typeId === MinecraftItemTypes.fishingRod.id) {
                 event = new BeforePlayerFishEvent;
                 event.player = Array.from(world.getPlayers({name: arg.source.nameTag}))[0];
                 this.#callbacks.forEach(callback => callback(event));

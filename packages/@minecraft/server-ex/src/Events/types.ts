@@ -23,3 +23,10 @@ export interface EntityEvent extends Event {
 export interface PlayerEvent extends Event {
     player?: Player;
 }
+
+export interface TriggerEvent extends Event {
+}
+
+export interface TriggerEventSignal<T extends TriggerEvent = TriggerEvent> extends EventSignal<T> {
+    trigger(arg: T): void;
+}

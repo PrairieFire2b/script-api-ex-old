@@ -41,6 +41,18 @@ export class BeforePlayerSleepEventSignal implements EventSignal<BeforePlayerSle
     unsubscribe(callback: (arg: BeforePlayerSleepEvent) => void): void;
 }
 
+export class CrystalExplodeTriggerEvent implements TriggerEvent {
+    entity?: Entity;
+    dimension?: Dimension;
+    location?: Location;
+};
+
+export class CrystalExplodeTriggerEventSignal implements TriggerEventSignal<CrystalExplodeTriggerEvent> {
+    trigger(arg: CrystalExplodeTriggerEvent): void;
+    subscribe(callback: (arg: CrystalExplodeTriggerEvent) => void): (arg: CrystalExplodeTriggerEvent) => void;
+    unsubscribe(callback: (arg: CrystalExplodeTriggerEvent) => void): void;
+}
+
 export class EntityDieEvent implements Event {
     cause?: EntityDamageCause;
     entity?: Entity;
@@ -153,4 +165,11 @@ export class PlayerSwitchDimensionEvent implements Event {
 export class PlayerSwitchDimensionEventSignal implements EventSignal<PlayerSwitchDimensionEvent> {
     subscribe(callback: (arg: PlayerSwitchDimensionEvent) => void): (arg: PlayerSwitchDimensionEvent) => void;
     unsubscribe(callback: (arg: PlayerSwitchDimensionEvent) => void): void;
+}
+
+export interface TriggerEvent extends Event {
+}
+
+export interface TriggerEventSignal<T extends TriggerEvent = TriggerEvent> extends EventSignal<T> {
+    trigger(arg: T): void;
 }

@@ -21,11 +21,11 @@ export class PlayerShootEventSignal implements EventSignal<PlayerShootEvent> {
             }
         });
         world.events.itemStopCharge.subscribe(arg => {
-            if(arg.source.nameTag === event.player?.nameTag)
+            if(event && arg.source.nameTag === event.player?.nameTag)
                 event.lastTick = event.lastTick ?? 72000 - arg.useDuration;
         });
         world.events.entityCreate.subscribe(arg => {
-            if (event.player?.headLocation.isNear(arg.entity.headLocation, 0.36)) {
+            if (event && event.player?.headLocation.isNear(arg.entity.headLocation, 0.36)) {
                 event.entity = arg.entity;
                 this.#callbacks.forEach(callback => callback(event));
             }

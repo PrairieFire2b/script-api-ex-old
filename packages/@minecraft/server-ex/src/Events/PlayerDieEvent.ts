@@ -22,7 +22,7 @@ export class PlayerDieEventSignal implements EventSignal<PlayerDieEvent> {
                     this.#callbacks.forEach(callback => callback(event));
                 }
             }
-        })
+        });
     }
     subscribe(callback: (arg: PlayerDieEvent) => void): (arg: PlayerDieEvent) => void {
         this.#callbacks.push(callback);

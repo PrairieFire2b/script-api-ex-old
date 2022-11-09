@@ -16,7 +16,7 @@ export class BeforePlayerSleepEventSignal implements EventSignal<BeforePlayerSle
             if(!arg.source.isSneaking
                 && block?.typeId === MinecraftBlockTypes.bed.id
                 && block?.dimension.id === "minecraft:overworld"
-                && world.getTime() >= 13000 && world.getTime() <= 23000) {
+                && world.getTime() >= 13000 && world.getTime() <= 23457) {
                 event = new BeforePlayerSleepEvent;
                 event.block = block;
                 event.player = Array.from(world.getPlayers({name: arg.source.nameTag}))[0];
