@@ -16,21 +16,27 @@ export class PlayerRespawnEventSignal implements EventSignal<PlayerRespawnEvent>
         world.events.entityHurt.subscribe((arg) => {
             component = arg.hurtEntity.getComponent("minecraft:health");
             if (arg.hurtEntity.typeId === MinecraftEntityTypes.player.id
-                && component instanceof EntityHealthComponent) {
-                if (component.current <= 0) {
-                    event = new PlayerRespawnEvent;
-                    event.from = new Location(arg.hurtEntity.location.x, arg.hurtEntity.location.y, arg.hurtEntity.location.z);
-                    let player = Array.from(world.getPlayers({ name: arg.hurtEntity.nameTag }))[0];
-                    event.player = player;
-                    let func = () => {
-                        if(players.includes(player) && event?.from?.equals(player.location) == false) {
-                            event.to = player.location;
-                            this.#callbacks.forEach(callback => callback(event));
-                            world.events.tick.unsubscribe(func);
-                        }
-                    };
-                    world.events.tick.subscribe(func);
-                }
+            && component instanceof EntityHealthComponent
+            && component.current <= 0) {
+                let deadPlayer = <Player>arg.hurtEntity;
+                let eventData = new PlayerRespawnEvent;
+                let fromLocation = deadPlayer.location;
+                eventData.from = new Location(fromLocation.x, fromLocation.y, fromLocation.z);
+                eventData.player = deadPlayer;
+                let func = () => {
+                    if(!players.includes(deadPlayer)){
+                        world.events.tick.unsubscribe(func);
+                        return;
+                    }
+                    let component = deadPlayer.getComponent("minecraft:health");
+                    if (component instanceof EntityHealthComponent && component.current > 0) {
+                        world.events.tick.unsubscribe(func);
+                        let toLocation = deadPlayer.location;
+                        eventData.to = new Location(toLocation.x, toLocation.y, toLocation.z);
+                        this.#callbacks.forEach(callback => callback(eventData));
+                    }
+                };
+                world.events.tick.subscribe(func);
             }
         });
         world.events.playerJoin.subscribe(arg => {
