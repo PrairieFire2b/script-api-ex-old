@@ -1,4 +1,4 @@
-import { Events, TriggerEvents } from "./Events/index";
+import { Events, TriggerEvents } from "./events/index";
 import { world } from "@minecraft/server";
 
 export class World {
@@ -16,3 +16,18 @@ export class World {
     events = new Events;
     triggerEvents = new TriggerEvents;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

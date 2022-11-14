@@ -1,4 +1,4 @@
-import { Block, Entity, EntityDamageCause, Player } from "@minecraft/server";
+import { Block, Dimension, Entity, EntityDamageCause, Player } from "@minecraft/server";
 
 export interface BeforeEvent extends Event {
     cancel?: boolean;
@@ -118,6 +118,36 @@ export class Events {
 export interface EventSignal<T extends Event = any> {
     subscribe(callback: (arg: T) => void): (arg: T) => void;
     unsubscribe(callback: (arg: T) => void): void;
+}
+
+export class ItemCanDestroyComponent {
+    readonly blocks: string[];
+    static readonly componentId = "minecraft:can_destroy";
+}
+
+export class ItemCanPlaceOnComponent {
+    readonly blocks: string[];
+    static readonly componentId = "minecraft:can_place_on";
+}
+
+export class ItemItemLockComponent {
+    static readonly componentId = "minecraft:item_lock";
+    mode?: "lock_in_inventory" | "lock_in_slot";
+}
+
+export class ItemKeepOnDeathComponent {
+    static readonly componentId = "minecraft:keep_on_death";
+}
+
+export class Location {
+    x: number;
+    y: number;
+    z: number;
+    rx?: number;
+    ry?: number;
+    dimension?: Dimension;
+    constructor(x: number, y: number, z: number, rx?: number, ry?: number, dimension?: Dimension);
+    static from(any: Array | Object): Location;
 }
 
 export class PlayerDieEvent implements Event {

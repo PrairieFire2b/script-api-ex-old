@@ -3,9 +3,9 @@
         "baseUrl": ".",
         "forceConsistentCasingInFileNames": true,
         "paths": {
-            "@minecraft/server-ex": ["packages/@minecraft/server-ex/src*"]
+            "@minecraft/server-ex": ["packages/@minecraft-ex/server/src*"]
         },
-        "outDir": "dist",
+        "outDir": "dist/@minecraft-ex",
         "target": "es2020",
         "moduleResolution": "node",
         "module": "es2020",
