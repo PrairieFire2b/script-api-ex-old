@@ -1,20 +1,16 @@
 import { toString } from "./Object";
-import { world } from "@minecraft/server";
 
-class Console {
+export class Console {
     #data: any;
     #pipe: Function;
-    constructor(pipe?: Function, style: { error?: string, log?: string, warn?: string } = {
+    constructor(pipe: Function, style: { error?: string, log?: string, warn?: string } = {
         error: "[Scripting][error]-", log: "[Scripting][log]-", warn: "[Scripting][warn]-"
     }) {
-        this.#pipe = pipe ?? ((message: string) => world.say(message));
+        this.#pipe = pipe;
         this.#data = { count: {}, style: style, time: {} };
     }
     assert(condition: boolean, ...args: any[]) {
         if(!condition) this.log("Assertion failed:", ...args);
-    }
-    clear() {
-        for(let i = 0;i <= 20;i++) this.#pipe("\n");
     }
     count(label: string = "default") {
         if(this.#data.count[label]) this.#data.count[label]++;
@@ -54,7 +50,7 @@ class Console {
     }
 }
 
-export function injectConsole(pipe?: Function, style?: { error?: string, log?: string, warn?: string }) {
+export function injectConsole(pipe: Function, style?: { error?: string, log?: string, warn?: string }) {
     globalThis.console = new Console(pipe, style);
     return globalThis.console;
 }

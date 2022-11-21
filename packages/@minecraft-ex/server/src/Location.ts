@@ -1,6 +1,6 @@
 import * as server from "@minecraft/server";
 import { BlockLocation, Dimension, Entity, XYRotation } from "@minecraft/server";
-import { ILoc } from "./../types";
+import { ILoc } from "./types";
 
 function fromArray(array: any[]) {
     let dimension: Dimension | undefined;
