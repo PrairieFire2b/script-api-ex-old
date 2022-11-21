@@ -13,6 +13,9 @@ class Console {
     assert(condition: boolean, ...args: any[]) {
         if(!condition) this.log("Assertion failed:", ...args);
     }
+    clear() {
+        for(let i = 0;i <= 20;i++) this.#pipe("\n");
+    }
     count(label: string = "default") {
         if(this.#data.count[label]) this.#data.count[label]++;
         else this.#data.count[label] = 1;
