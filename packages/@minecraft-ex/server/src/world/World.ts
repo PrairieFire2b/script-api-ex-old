@@ -16,18 +16,3 @@ export class World {
     events = new Events;
     triggerEvents = new TriggerEvents;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
