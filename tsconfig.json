@@ -1,22 +1,16 @@
 {
     "compilerOptions": {
-        "baseUrl": ".",
-        "forceConsistentCasingInFileNames": true,
-        "paths": {
-            "@minecraft/server-ex": ["packages/@minecraft-ex/server/src*"]
-        },
-        "outDir": "dist/@minecraft-ex",
-        "target": "es2020",
-        "moduleResolution": "node",
-        "module": "es2020",
-        "lib": ["es2020"],
-        "allowJs": false,
-        "strict": true,
-        "isolatedModules": true,
-        "esModuleInterop": true,
+        "alwaysStrict": true,
         "declaration": true,
-        "sourceMap": true,
-        "skipLibCheck": true
+        "declarationDir": "node_modules/@minecraft-ex",
+        "esModuleInterop": true,
+        "lib": ["es2020"],
+        "moduleResolution": "node",
+        "outDir": "dist",
+        "skipDefaultLibCheck": true,
+        "skipLibCheck": true,
+        "strict": true,
+        "target": "esnext",
     },
     "exclude": ["node_modules"]
 }

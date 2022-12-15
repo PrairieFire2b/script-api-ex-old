@@ -1,1 +1,1 @@
-# `@minecraft-ex/server`
+# @minecraft-ex/server
