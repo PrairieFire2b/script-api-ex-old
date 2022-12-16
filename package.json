@@ -1,0 +1,10 @@
+{
+  "author": "PrairieFire2b <prairie-fire@outlook.com>",
+  "dependencies": {
+    "@minecraft/server": "^1.1.0-beta.release.1.19.50"
+  },
+  "description": "Script API Ex",
+  "license": "MIT",
+  "name": "script-api-ex",
+  "version": "0.1.0"
+}

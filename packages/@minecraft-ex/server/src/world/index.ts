@@ -1,0 +1,5 @@
+class World {
+    
+}
+
+export { World };

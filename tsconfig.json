@@ -1,12 +1,17 @@
 {
     "compilerOptions": {
         "alwaysStrict": true,
-        "declaration": true,
-        "declarationDir": "node_modules/@minecraft-ex",
+        "baseUrl": ".",
+        // "declaration": true,
+        // "declarationDir": "node_modules/@minecraft-ex",
         "esModuleInterop": true,
         "lib": ["es2020"],
         "moduleResolution": "node",
-        "outDir": "dist",
+        "outDir": "scripts/@minecraft-ex",
+        "paths": {
+            "@minecraft-ex/client": ["packages/@minecraft-ex/client/*"],
+            "@minecraft-ex/server": ["packages/@minecraft-ex/server/*"]
+        },
         "skipDefaultLibCheck": true,
         "skipLibCheck": true,
         "strict": true,
