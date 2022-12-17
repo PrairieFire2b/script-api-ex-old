@@ -1,1 +1,1 @@
-export * from "./BeforePlayerSleepEventSignal"
+export * from "./BeforePlayerSleep"

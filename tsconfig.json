@@ -9,7 +9,7 @@
         "moduleResolution": "node",
         "outDir": "scripts/@minecraft-ex",
         "paths": {
-            "@minecraft-ex/client": ["packages/@minecraft-ex/client/*"],
+            // "@minecraft-ex/client": ["packages/@minecraft-ex/client/*"],
             "@minecraft-ex/server": ["packages/@minecraft-ex/server/*"]
         },
         "skipDefaultLibCheck": true,
@@ -17,5 +17,5 @@
         "strict": true,
         "target": "esnext",
     },
-    "exclude": ["node_modules"]
+    "exclude": ["node_modules", "tests"]
 }

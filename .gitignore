@@ -38,7 +38,8 @@ bower_components
 build/Release
 
 # Dependency directories
-node_modules/@minecraft
+node_modules/
+!node_modules/@minecraft-ex
 jspm_packages/
 
 # TypeScript v1 declaration files
