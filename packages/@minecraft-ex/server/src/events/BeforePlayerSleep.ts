@@ -1,5 +1,5 @@
 import * as server from "@minecraft/server";
-import { EventSignal } from "./../../events/types";
+import { EventSignal } from "./types";
 
 class BeforePlayerSleepEvent {
     player!: server.Player;

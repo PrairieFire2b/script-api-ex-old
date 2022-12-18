@@ -28,8 +28,8 @@ class MinecraftCommandTypes {
     static daylock: CommandType<"daylock", 1, [[boolean?]]> = MinecraftCommandTypes.alwaysday as unknown as CommandType<"daylock", 1, [[boolean?]]>;
     static op: CommandType<"op", 2, [[target]]>;
     static say: CommandType<"say", 0, [[string?]]> = new SayCommandType;
-    static tellraw: CommandType<"tellraw", 0, [[target, server.IRawMessage]]>;
-    static titleraw: CommandType<"titleraw", 1, [[target, TitleRawSet, server.IRawMessage]]>;
+    static tellraw: CommandType<"tellraw", 0, [[target, server.RawMessage]]>;
+    static titleraw: CommandType<"titleraw", 1, [[target, TitleRawSet, server.RawMessage]]>;
     static weather: CommandType<"weather", 1, [["clear" | "rain" | "thunder", int?], ["query"]]> = new WeatherCommandType;
 }
 
