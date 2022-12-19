@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+		"paths": {
+      "@minecraft-ex/client": ["packages/@minecraft-ex/client/*"],
+			"@minecraft-ex/server": ["packages/@minecraft-ex/server/*"]
+		},
+    "outDir": "scripts/@minecraft-ex",
+    "target": "esnext",
+    "moduleResolution": "node",
+    "module": "es2020",
+    "allowJs": false,
+    "strict": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "declaration": false,
+    "sourceMap": false,
+    "skipLibCheck": true
+  },
+  "exclude": ["node_modules"]
+}
