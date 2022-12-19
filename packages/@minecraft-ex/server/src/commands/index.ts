@@ -25,13 +25,15 @@ Object.defineProperty(CommandTypeConstructor, "name", { value: "CommandType" });
 class MinecraftCommandTypes {
     static alwaysday: CommandType<"alwaysday", 1, [[boolean?]]> = new AlwaysdayCommandType;
     static clear: CommandType<"clear", 1, [[target?, server.ItemType?, int?, int?]]> = new ClearCommandType;
-    static daylock: CommandType<"daylock", 1, [[boolean?]]> = MinecraftCommandTypes.alwaysday as unknown as CommandType<"daylock", 1, [[boolean?]]>;
+    static daylock: CommandType<"daylock", 1, [[boolean?]]> = new AlwaysdayCommandType as unknown as CommandType<"daylock", 1, [[boolean?]]>;
     static op: CommandType<"op", 2, [[target]]>;
     static say: CommandType<"say", 0, [[string?]]> = new SayCommandType;
     static tellraw: CommandType<"tellraw", 0, [[target, server.RawMessage]]>;
     static titleraw: CommandType<"titleraw", 1, [[target, TitleRawSet, server.RawMessage]]>;
     static weather: CommandType<"weather", 1, [["clear" | "rain" | "thunder", int?], ["query"]]> = new WeatherCommandType;
 }
+
+Object.defineProperty(MinecraftCommandTypes.daylock, "id", "daylock");
 
 type CommandName = keyof typeof MinecraftCommandTypes;
 

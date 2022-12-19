@@ -1,5 +1,5 @@
 import * as server from "@minecraft/server"
-import { CommandType, Item, int, target } from "./types"
+import { CommandType, target } from "./types"
 
 class SayCommandType implements CommandType<"say", 0, [[string?]]> {
     id: "say" = "say";

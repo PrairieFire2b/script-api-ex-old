@@ -1,7 +1,7 @@
 import * as server from "@minecraft/server"
-import { CommandType, Item, int, target } from "./types"
+import { CommandType, int, target } from "./types"
 
-class ClearCommandType implements CommandType<"clear", 1, [[target?, Item?, int?, int?]]> {
+class ClearCommandType implements CommandType<"clear", 1, [[target?, server.ItemType?, int?, int?]]> {
     id: "clear" = "clear";
     permissionLevel: 1 = 1;
     run(executor: target, ...data: [target?, server.ItemType?, number?, number?]): Promise<server.CommandResult> {

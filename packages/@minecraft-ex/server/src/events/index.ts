@@ -34,7 +34,7 @@ class EventSignalConstructor<T> implements EventSignal<T> {
     }
 }
 
-Object.defineProperty(EventSignalConstructor, "name", { value: "EventSignal" });
+Object.defineProperty(EventSignalConstructor, "name", "EventSignal");
 
 class MinecraftEventTypes {
     static beforeChat = server.world.events.beforeChat;
