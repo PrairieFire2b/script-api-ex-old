@@ -3,7 +3,8 @@
     "baseUrl": ".",
 		"paths": {
       "@minecraft-ex/client": ["packages/@minecraft-ex/client/*"],
-			"@minecraft-ex/server": ["packages/@minecraft-ex/server/*"]
+			"@minecraft-ex/server": ["packages/@minecraft-ex/server/*"],
+      "@minecraft-ex/server-ui": ["packages/@minecraft-ex/server-ui"]
 		},
     "outDir": "scripts/@minecraft-ex",
     "target": "esnext",
