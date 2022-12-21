@@ -8,6 +8,21 @@ Object.assign(server.Entity.prototype, {
     damageEntities(amount: number, ...entities: Entity[]) {
         // TODO
     },
+    hasFamily(family: string) {
+        let that = this as unknown as Entity;
+        for(let entity of that.dimension.getEntities({families: [family], type: that.typeId})) if(entity == that) return true;
+        return false;
+    },
+    hasFamilies(...families: string[]) {
+        let that = this as unknown as Entity;
+        for(let entity of that.dimension.getEntities({families, type: that.typeId})) if(entity == that) return true;
+        return false;
+    },
+    hasTags(...tags: string[]) {
+        let that = this as unknown as Entity;
+        for(let entity of that.dimension.getEntities({tags, type: that.typeId})) if(entity == that) return true;
+        return false;
+    },
     toLocaleString(): string {
         return `entity.${(this as unknown as Entity).typeId}.name`;
     }

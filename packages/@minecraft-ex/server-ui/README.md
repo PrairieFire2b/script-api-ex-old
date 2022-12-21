@@ -1,1 +1,1 @@
-# @minecraft-ex/server-ui
+# `@minecraft-ex/server-ui`

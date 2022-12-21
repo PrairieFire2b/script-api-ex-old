@@ -3,9 +3,5 @@ export {
 } from "@minecraft/server-ui"
 
 export {
-    FormResponse,
-    MessageFormData,
-    MessageFormResponse,
-    ModalFormData,
-    ModalFormResponse
+    FormResponse
 } from "@minecraft/server-ui"

@@ -1,12 +1,12 @@
 import * as server from "@minecraft/server"
 import * as serverUi from "@minecraft/server-ui"
 
-const ActionFormData = Object.assign(serverUi.ActionFormData, {});
+const MessageFormData = Object.assign(serverUi.MessageFormData, {});
 
-const show = serverUi.ActionFormData.prototype.show;
+const show = serverUi.MessageFormData.prototype.show;
 
 Object.assign(serverUi.ActionFormData.prototype, {
-    callbacks: [] as ((arg: ActionFormResponse) => void)[],
+    callbacks: [] as ((arg: MessageFormResponse) => void)[],
     async show(player: server.Player) {
         // @ts-ignore
         return show.bind(this)(player).then((response) => {
@@ -14,18 +14,18 @@ Object.assign(serverUi.ActionFormData.prototype, {
             return response.player = player, this.callbacks.forEach(callback => callback(response)), response;
         });
     },
-    subscribe(callback: (arg: ActionFormResponse) => void) {
+    subscribe(callback: (arg: MessageFormResponse) => void) {
         return this.callbacks[this.callbacks.length] = callback;
     },
-    unsubscribe(callback: (arg: ActionFormResponse) => void) {
+    unsubscribe(callback: (arg: MessageFormResponse) => void) {
         delete this.callbacks[this.callbacks.indexOf(callback)];
     }
 });
 
-type ActionFormResponse = serverUi.ActionFormResponse;
+type MessageFormResponse = serverUi.MessageFormResponse;
 
-const ActionFormResponse = Object.assign(serverUi.ActionFormResponse, {});
+const MessageFormResponse = Object.assign(serverUi.MessageFormResponse, {});
 
-Object.assign(serverUi.ActionFormResponse.prototype, { player: undefined });
+Object.assign(serverUi.MessageFormResponse.prototype, { player: undefined });
 
-export { ActionFormData, ActionFormResponse };
+export { MessageFormData, MessageFormResponse };

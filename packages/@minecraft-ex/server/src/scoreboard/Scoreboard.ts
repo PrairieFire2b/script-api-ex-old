@@ -1,8 +1,12 @@
 import * as server from "@minecraft/server"
 
 class Scoreboard extends server.Scoreboard {
+    [Symbol.hasInstance](instance: any) {
+        return instance instanceof server.Scoreboard;
+    }
     // @ts-ignore
     constructor() {
+        // @ts-ignore
         return server.world.scoreboard;
     }
 }

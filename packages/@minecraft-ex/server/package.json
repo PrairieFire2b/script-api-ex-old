@@ -2,16 +2,19 @@
   "name": "@minecraft-ex/server",
   "repository": {
     "type": "git",
-    "url": "https://github.com/PrairieFire2b/script-api-ex.git",
+    "url": "git+https://github.com/PrairieFire2b/script-api-ex.git",
     "directory": "packages/@minecraft-ex/server"
   },
-  "author": {
-    "name": "PrairieFire2b",
-    "email": "prairie-fire@outlook.com"
-  },
+  "author": "PrairieFire2b <prairie-fire@outlook.com>",
   "homepage": "https://PrairieFire2b.github.io/script-api-ex/",
-  "bugs": "https://github.com/PrairieFire2b/script-api-ex/issues",
+  "bugs": {
+    "url": "https://github.com/PrairieFire2b/script-api-ex/issues"
+  },
   "license": "MIT",
   "version": "0.1.0",
-  "main": "src/index.ts"
+  "main": "src/index.ts",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
 }

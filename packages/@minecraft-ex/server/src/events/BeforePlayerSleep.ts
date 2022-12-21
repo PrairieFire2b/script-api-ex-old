@@ -10,17 +10,21 @@ class BeforePlayerSleepEventSignal {
     #callbacks: ((arg: BeforePlayerSleepEvent) => void)[] = [];
     constructor() {
         let event: BeforePlayerSleepEvent;
-        server.world.events.beforeItemUseOn.subscribe(async arg => {
+        server.world.events.beforeItemUseOn.subscribe(arg => {
             let block = arg.source.dimension.getBlock(arg.blockLocation);
             if(!arg.source.isSneaking
                 && block?.typeId === server.MinecraftBlockTypes.bed.id
                 && block?.dimension.id === "minecraft:overworld"
                 && server.world.getTime() >= 13000 && server.world.getTime() <= 23457
-                && (await arg.source.dimension.runCommandAsync(`testfor @e[c=15,x=${block.x},y=${block.y},z=${block.z},family=monster]`)).successCount == 0) {
+                && !(block.dimension.getEntities({
+                    maxDistance: 15,
+                    location: new server.Location(block.x, block.y, block.z),
+                    families: ["monster"]
+                })[Symbol.iterator]().next().value)) {
                 event = new BeforePlayerSleepEvent;
                 event.blockLocation = arg.blockLocation;
                 event.player = Array.from(server.world.getPlayers({name: arg.source.nameTag}))[0];
-                this.#callbacks.forEach(callback => callback(event));
+                this.#callbacks.forEach(callback => server.system.run(() => callback(event)));
                 arg.cancel = event.cancel;
             }
         });

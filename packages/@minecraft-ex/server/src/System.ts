@@ -9,8 +9,12 @@ let intervalSchedule: Function[] = [];
 let timeoutSchedule: Function[] = [];
 
 class System extends server.System {
+    [Symbol.hasInstance](instance: any) {
+        return instance instanceof server.System;
+    }
     // @ts-ignore
     constructor() {
+        // @ts-ignore
         return server.system;
     }
 }
@@ -28,9 +32,14 @@ Object.assign(server.System.prototype, {
         (async () => {
             let func = null;
             let startTime = Date.now();
+            let canRun = false;
             while(await intervalSchedule[id]) {
-                if(func) func(...args);
-                if(!delay || Date.now() - startTime >= delay) func = intervalSchedule[id];
+                canRun = Date.now() - startTime >= delay;
+                if(func && canRun) try {
+                    func(...args), startTime = Date.now();
+                } catch(error) {
+                    console.log(`Uncaught ${error}`);
+                } else if(!delay || Date.now() - startTime >= delay) func = intervalSchedule[id];
             }
             return this.clearInterval(id);
         })();
@@ -39,7 +48,7 @@ Object.assign(server.System.prototype, {
     setTimeout<T extends any[]>(func: (...args: T) => void, delay: number = 0, ...args: T): number {
         const id = timeoutIndex++;
         timeoutSchedule.push(func);
-        if(delay <= 3) return func(...args), id;
+        if(delay <= 4) return func(...args), id;
         (async () => {
             let func = null;
             let startTime = Date.now();

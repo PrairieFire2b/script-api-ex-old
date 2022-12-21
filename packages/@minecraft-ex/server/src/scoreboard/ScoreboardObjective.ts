@@ -11,8 +11,7 @@ Object.assign(server.ScoreboardObjective.prototype, {
         entity.addTag(tag);
         entity
             .runCommandAsync(`scoreboard players set @e[tag=${tag}] ${(this as unknown as ScoreboardObjective).id} ${score}`)
-            .then(() => entity.removeTag(tag))
-            .catch((error) => { throw error; });
+            .then(() => entity.removeTag(tag)).catch((error) => { throw error; }).finally(() => entity.removeTag(tag));
     }
 });
 

@@ -1,6 +1,9 @@
 import * as server from "@minecraft/server"
 
 class Dimension extends server.Dimension {
+    static [Symbol.hasInstance](instance: any) {
+        return instance instanceof server.Dimension;
+    }
     // @ts-ignore
     constructor(dimensionId: string) {
         return server.world.getDimension(dimensionId);

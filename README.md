@@ -14,3 +14,11 @@ Script API Ex
 Its documentation is available at <https://PrairieFire2b.github.io/script-api-ex>.
 
 The source of the documentation (for contributions) is available at the [documentation branch](https://github.com/PrairieFire2b/script-api-ex/tree/documentation).
+
+## Installations
+
+```ps
+npm install @minecraft-ex/server@latest
+npm install @minecraft-ex/server-ui@latest
+...
+```
