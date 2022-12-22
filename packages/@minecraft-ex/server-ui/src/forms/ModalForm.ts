@@ -13,12 +13,6 @@ Object.assign(serverUi.MessageFormData.prototype, {
             // @ts-ignore
             return response.player = player, this.callbacks.forEach(callback => callback(response)), response;
         });
-    },
-    subscribe(callback: (arg: ModalFormResponse) => void) {
-        return this.callbacks[this.callbacks.length] = callback;
-    },
-    unsubscribe(callback: (arg: ModalFormResponse) => void) {
-        delete this.callbacks[this.callbacks.indexOf(callback)];
     }
 });
 

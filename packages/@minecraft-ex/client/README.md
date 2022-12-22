@@ -1,1 +1,1 @@
-# @minecraft-ex/client
+# `@minecraft-ex/client`

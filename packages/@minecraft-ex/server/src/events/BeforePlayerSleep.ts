@@ -37,7 +37,6 @@ class BeforePlayerSleepEventSignal {
     }
 }
 
-// @ts-ignore
-let beforePlayerSleepEventSignal: BeforePlayerSleepEventSignal = new BeforePlayerSleepEventSignal();
+let beforePlayerSleep: BeforePlayerSleepEventSignal = new BeforePlayerSleepEventSignal();
 
-export { BeforePlayerSleepEvent, BeforePlayerSleepEventSignal, beforePlayerSleepEventSignal };
+export { BeforePlayerSleepEvent, BeforePlayerSleepEventSignal, beforePlayerSleep };

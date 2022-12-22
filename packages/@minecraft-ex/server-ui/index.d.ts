@@ -10,29 +10,21 @@ import * as serverUi from "@minecraft/server-ui"
 export class ActionFormData extends serverUi.ActionFormData {
     /**
      * @remarks
-     * Creates and shows this modal popup form. Returns
-     * asynchronously when the player confirms or cancels the
-     * dialog.
-     * @param players 
-     * Players to show this dialog to.
-     * @throws This function can throw errors.
-     */
-    showAt(...players: server.Player[]): Promise<ActionFormResponse>[];
-    /**
-     * @remarks
-     * Adds a callback that will be called when the dialog
-     * was showed to a player.
+     * Creates a callback when one of the buttons
+     * was selected. Call with the last component.
      * @param callback
-     */
-    subscribe(callback: (arg: ActionFormResponse) => void): (arg: ActionFormResponse) => void;
-    /**
-     * @remarks
-     * Removes a callback from being called when the dialog
-     * was showed to a player.
-     * @param callback
+     * The callback.
      * @throws This function can throw errors.
+     * @example 
+     * ```ts
+     * new ActionFormData()
+     *     .button("Hello World!")
+     *     .then(response => log(response.player.name, "clicked the button", response.selection));
+     *     .title("Title")
+     *     .show(player);
+     * ```
      */
-    unsubscribe(callback: (arg: ActionFormResponse) => void): void;
+    then(callback: (arg: ActionFormResponse) => void): ActionFormData;
 }
 export class ActionFormResponse extends serverUi.ActionFormResponse {
     /**
@@ -43,29 +35,22 @@ export class ActionFormResponse extends serverUi.ActionFormResponse {
 export class MessageFormData extends serverUi.MessageFormData {
     /**
      * @remarks
-     * Creates and shows this modal popup form. Returns
-     * asynchronously when the player confirms or cancels the
-     * dialog.
-     * @param players 
-     * Players to show this dialog to.
-     * @throws This function can throw errors.
-     */
-    // showAt(...players: server.Player[]): Promise<MessageFormResponse>[];
-    /**
-     * @remarks
-     * Adds a callback that will be called when the dialog
-     * was showed to a player.
+     * Creates a callback when one of the buttons
+     * was selected. Call with the last component.
      * @param callback
-     */
-    subscribe(callback: (arg: MessageFormResponse) => void): (arg: MessageFormResponse) => void;
-    /**
-     * @remarks
-     * Removes a callback from being called when the dialog
-     * was showed to a player.
-     * @param callback
+     * The callback.
      * @throws This function can throw errors.
+     * @example 
+     * ```ts
+     * new MessageFormData()
+     *     .button1("Choose me 1!")
+     *     .then(response => log(response.player.name, "clicked the button1"));
+     *     .title("Title")
+     *     .button2("Choose me 2!")
+     *     .show(player);
+     * ```
      */
-    unsubscribe(callback: (arg: MessageFormResponse) => void): void;
+    then(callback: (arg: MessageFormResponse) => void): MessageFormData;
 }
 export class MessageFormResponse extends serverUi.MessageFormResponse {
     /**
@@ -74,31 +59,6 @@ export class MessageFormResponse extends serverUi.MessageFormResponse {
     player: server.Player;
 }
 export class ModalFormData extends serverUi.ModalFormData {
-    /**
-     * @remarks
-     * Creates and shows this modal popup form. Returns
-     * asynchronously when the player confirms or cancels the
-     * dialog.
-     * @param players 
-     * Players to show this dialog to.
-     * @throws This function can throw errors.
-     */
-    // showAt(...players: server.Player[]): Promise<ModalFormResponse>[];
-    /**
-     * @remarks
-     * Adds a callback that will be called when the dialog
-     * was showed to a player.
-     * @param callback
-     */
-    subscribe(callback: (arg: ModalFormResponse) => void): (arg: ModalFormResponse) => void;
-    /**
-     * @remarks
-     * Removes a callback from being called when the dialog
-     * was showed to a player.
-     * @param callback
-     * @throws This function can throw errors.
-     */
-    unsubscribe(callback: (arg: ModalFormResponse) => void): void;
 }
 export class ModalFormResponse extends serverUi.ModalFormResponse {
     /**

@@ -1,5 +1,7 @@
 import * as server from "@minecraft/server"
-import { beforePlayerSleepEventSignal } from "./BeforePlayerSleep";
+import { beforePlayerSelectedSlot } from "./BeforePlayerSelectedSlot";
+import { beforePlayerSleep } from "./BeforePlayerSleep";
+import { playerEnterDimension } from "./PlayerEnterDimension";
 
 class Events extends server.Events {
     [Symbol.hasInstance](instance: any) {
@@ -13,8 +15,12 @@ class Events extends server.Events {
 }
 
 Object.assign(server.Events.prototype, {
-    beforePlayerSleep: beforePlayerSleepEventSignal
+    beforePlayerSelectedSlot,
+    beforePlayerSleep,
+    playerEnterDimension
 });
 
 export { Events };
+export { BeforePlayerSelectedSlotEvent, BeforePlayerSelectedSlotEventSignal } from "./BeforePlayerSelectedSlot"
 export { BeforePlayerSleepEvent, BeforePlayerSleepEventSignal } from "./BeforePlayerSleep"
+export { PlayerEnterDimensionEvent, PlayerEnterDimensionEventSignal } from "./PlayerEnterDimension"

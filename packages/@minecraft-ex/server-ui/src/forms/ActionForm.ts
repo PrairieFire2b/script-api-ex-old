@@ -3,22 +3,31 @@ import * as serverUi from "@minecraft/server-ui"
 
 const ActionFormData = Object.assign(serverUi.ActionFormData, {});
 
+const button = serverUi.ActionFormData.prototype.button;
+
 const show = serverUi.ActionFormData.prototype.show;
 
 Object.assign(serverUi.ActionFormData.prototype, {
-    callbacks: [] as ((arg: ActionFormResponse) => void)[],
+    callbacks: [] as ((arg: ActionFormResponse) => void)[][],
+    selection: 0,
+    button(text: string, iconPath?: string) {
+        return this.selection++, button.bind(this)(text, iconPath);
+    },
     async show(player: server.Player) {
         // @ts-ignore
         return show.bind(this)(player).then((response) => {
             // @ts-ignore
-            return response.player = player, this.callbacks.forEach(callback => callback(response)), response;
+            response.player = player;
+            this.callbacks.forEach((callbacks, index) => {
+                if(response.selection == index) callbacks.forEach(callback => callback(response));
+            });
+            return response;
         });
     },
-    subscribe(callback: (arg: ActionFormResponse) => void) {
-        return this.callbacks[this.callbacks.length] = callback;
-    },
-    unsubscribe(callback: (arg: ActionFormResponse) => void) {
-        delete this.callbacks[this.callbacks.indexOf(callback)];
+    then(callback: (arg: ActionFormResponse) => void) {
+        this.callbacks[this.selection] ?? (this.callbacks[this.selection] = []);
+        this.callbacks[this.selection].push(callback);
+        return this;
     }
 });
 

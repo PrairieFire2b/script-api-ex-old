@@ -6,6 +6,79 @@
    Copyright (c) 2022 PrairieFire2b.
    ***************************************************************************** */
 import * as server from "@minecraft/server"
+export enum BlockPlaceMode {
+    destroy = "destroy",
+    keep = "keep",
+    replace = "replace"
+}
+export enum ScoreboardOperator {
+    add = "+=",
+    divide = "/=",
+    equals = "=",
+    greater = ">",
+    less = "<",
+    unequals = "><",
+    mod = "%=",
+    multiply = "*=",
+    subtract = "-="
+}
+export enum TitleRawSet {
+    actionbar = "actionbar",
+    subtitle = "subtitle",
+    title = "title"
+}
+export interface RawMessage {
+    rawtext?: (RawMessage | string)[];
+    text?: string;
+    translate?: string;
+    with?: (RawMessage | string)[];
+}
+export interface CommandRawMessage {
+    rawtext?: (CommandRawMessage | string)[];
+    selector?: string;
+    text?: string;
+    translate?: string;
+    with?: (CommandRawMessage | string)[];
+}
+export class BeforePlayerSelectSlotEvent {
+    /**
+     * If set to true, this will cancel the switch of slot.
+     */
+    cancel: boolean;
+    /**
+     * Returns the player that triggered this event.
+     */
+    readonly player: Player;
+    /**
+     * Returns the slot that the player selected.
+     */
+    readonly selectedSlot: number;
+    /**
+     * Returns the item stack of the selecting slot.
+     */
+    readonly selectingItem: ItemStack;
+    /**
+     * Returns the slot that the player is selecting.
+     */
+    readonly selectingSlot: number;
+}
+export class BeforePlayerSelectSlotEventSignal {
+    protected constructor();
+    /**
+     * @remarks
+     * Adds a callback that will be called when a player
+     * try to sleep.
+     * @param callback
+     */
+    subscribe(callback: (arg: BeforePlayerSelectSlotEvent) => void): (arg: BeforePlayerSelectSlotEvent) => void;
+    /**
+     * @remarks
+     * Removes a callback from being called.
+     * @param callback
+     * @throws This function can throw errors.
+     */
+    unsubscribe(callback: (arg: BeforePlayerSelectSlotEvent) => void): void;
+}
 export class BeforePlayerSleepEvent {
     /**
      * Location of the bed being impacted.
@@ -40,6 +113,11 @@ export class BeforePlayerSleepEventSignal {
 export class Block extends server.Block {
     /**
      * @returns
+     * Returns a object describes the block type, for `JSON.stringify`.
+     */
+    toJSON(): any;
+    /**
+     * @returns
      * Returns a block identifier converted to a locale key string.
      */
     toLocaleString(): string;
@@ -51,6 +129,12 @@ export class BlockLocation extends server.BlockLocation {
      * Returns a block location from a vector.
      */
     static from(vector: server.Vector3): BlockLocation;
+}
+export class Container extends server.Container {
+    static from<T extends server.Block | server.Entity | server.Player>(container: T)
+        : T extends server.Block ? server.BlockInventoryComponentContainer | void
+        : T extends server.Player ? server.PlayerInventoryComponentContainer
+        : server.InventoryComponentContainer;
 }
 export class Dimension extends server.Dimension {
     /**
@@ -72,8 +156,20 @@ export class Dimension extends server.Dimension {
     getAllPlayers(): Player[];
     // @ts-ignore
     getPlayers(options?: server.EntityQueryOptions): Iterable<Player>;
+    /**
+     * @remarks
+     * Tries to set a block.
+     * @param identifier
+     * @param blockLocation
+     * @param mode
+     * @throws This function can throw errors.
+     */
+    setBlock(identifier: string, blockLocation: BlockLocation, mode: BlockPlaceMode): server.Block;
 }
 export class Entity extends server.Entity {
+    readonly x: number;
+    readonly y: number;
+    readonly z: number;
     /**
      * @remarks
      * Override [Symbol.hasInstance]() to handle {@link Player} instanceof Entity correctly.
@@ -82,12 +178,29 @@ export class Entity extends server.Entity {
     static [Symbol.hasInstance](instance: any): boolean;
     /**
      * @remarks
+     * Creates a new entity (e.g., a mob) at the specified
+     * location.
+     * @param identifier
+     * Identifier of the type of entity to spawn. If no namespace
+     * is specified, 'minecraft:' is assumed.
+     * @param dimension
+     * The specified dimension to spawn.
+     * @param location
+     * The location at which to create the entity.
+     * @returns
+     * Newly created entity at the specified location.
+     * @throws This function can throw errors.
+     */
+    constructor(identifier: string, dimension: server.Dimension, location: server.Vector3);
+    /**
+     * @remarks
      * Damages a set of entity by this entity.
      * @param amount
      * @param entities
      * The set of entity will be damaged.
      */
     damageEntities(amount: number, ...entities: Entity[]): void;
+    toJSON(): any;
     /**
      * @returns
      * Returns a entity identifier converted to a locale key string.
@@ -96,10 +209,20 @@ export class Entity extends server.Entity {
 }
 export class Events extends server.Events {
     /**
-     * This event fires before a player interacted with bed
+     * This event fires before a player changes
+     * the selected slot. This event can be canceled;
+     */
+    readonly beforePlayerSelectSlot: BeforePlayerSelectSlotEventSignal;
+    /**
+     * This event fires before a player interacts with bed
      * and will fall asleep. The event can be canceled.
      */
     readonly beforePlayerSleep: BeforePlayerSleepEventSignal;
+    /**
+     * @todo
+     * Not implement
+     */
+    readonly playerEnterDimension: PlayerEnterDimensionEventSignal;
     /**
      * @returns
      * Represents a reference that is {@link server.world.events}.
@@ -138,8 +261,21 @@ export class Location extends server.Location {
      * Returns a location from a vector.
      */
     static from(vector: server.Vector3): Location;
+    /**
+     * @returns
+     * Returns a object describes the item type, for `JSON.stringify`.
+     */
+    toJSON(): any;
+}
+export class MinecraftDimensionTypes {
+    static readonly nether: Dimension;
+    static readonly overworld: Dimension;
+    static readonly theEnd: Dimension;
 }
 export class Player extends server.Player {
+    readonly x: number;
+    readonly y: number;
+    readonly z: number;
     /**
      * @remarks
      * Returns a active player with the specified entity or name within the world.
@@ -150,6 +286,7 @@ export class Player extends server.Player {
      * or undefined.
      */
     static from(playerLike: server.Entity | string): Player | void;
+    readonly onScreenDisplay: ScreenDisplay;
     readonly target: Entity;
     /**
      * @remarks
@@ -165,8 +302,38 @@ export class Player extends server.Player {
      */
     toLocaleString(): string;
 }
-export class RawMessage implements server.RawMessage {
-    constructor(text: string);
+export class PlayerEnterDimensionEvent {
+    dimension: Dimension
+    enteringDimension: Dimension;
+    location: Location;
+    player: Player;
+}
+export class PlayerEnterDimensionEventSignal {
+    protected constructor();
+    /**
+     * @remarks
+     * Adds a callback that will be called when a player
+     * enter a dimension.
+     * @param callback
+     */
+    subscribe(callback: (arg: PlayerEnterDimensionEvent) => void): (arg: PlayerEnterDimensionEvent) => void;
+    /**
+     * @remarks
+     * Removes a callback from being called.
+     * @param callback
+     * @throws This function can throw errors.
+     */
+    unsubscribe(callback: (arg: PlayerEnterDimensionEvent) => void): void;
+}
+export class ScreenDisplay extends server.ScreenDisplay {
+    /**
+     * @remarks
+     * Set the action bar text - a piece of text that displays
+     * beneath the title and above the hot-bar.
+     * @param text
+     * @throws This function can throw errors.
+     */
+    setActionBar(text: server.RawMessage | string): void;
 }
 export class Scoreboard extends server.Scoreboard {
     addObjective(objectiveId: string, displayName: string): ScoreboardObjective;
@@ -192,13 +359,41 @@ export class Scoreboard extends server.Scoreboard {
 export class ScoreboardObjective extends server.ScoreboardObjective {
     /**
      * @remarks
+     * Add a specific score for a participant.
+     * @param participant 
+     * @param count
+     * @returns
+     * If success, return true or false.
+     */
+    addScore(participant: server.ScoreboardIdentity, count: number): boolean;
+    /**
+     * @remarks
+     * Operates a specific score for a participant.
+     * @param participant
+     * @param operation
+     * The operation
+     * @param other
+     * The other one participant to operate with.
+     * @param otherObjective
+     * A optional parameter for the other participant.
+     * @returns
+     * If success, return true or false.
+     */
+    operateScore(
+        participant: server.ScoreboardIdentity,
+        operation: ScoreboardOperator,
+        other: server.ScoreboardIdentity,
+        otherObjective?: server.ScoreboardObjective | string
+    ): boolean;
+    /**
+     * @remarks
      * Sets a specific score for a participant.
      * @param participant
-     * @param score
+     * @param count
      * The score will be set.
      * @throws This function can throw errors.
      */
-    setScore(participant: server.ScoreboardIdentity, score: number): void;
+    setScore(participant: server.ScoreboardIdentity, count: number): void;
 }
 export class System extends server.System {
     events: SystemEvents;
@@ -283,6 +478,9 @@ export class World extends server.World {
      * Represents a reference that is {@link server.world}.
      */
     constructor();
+    // @ts-ignore
+    getDimension(dimensionId: string | server.Dimension): Dimension;
+    say(message: number | RawMessage | string): void;
 }
 export const world: World;
 export const scoreboard: Scoreboard;

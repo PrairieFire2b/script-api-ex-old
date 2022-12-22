@@ -4,10 +4,20 @@ Contains many types related to manipulating a Minecraft world, including entitie
 
 ## Installation
 
-```ps
+Execute the following commands
+
+```shell
 npm install @minecraft-ex/server
-cd node_modules/@minecraft-ex/server
-tsc && cd ../../
+```
+
+If error, you should make sure that typescript is installed
+Or use `npm install -g typescript`
+
+Change the statements of imports
+
+```ts
+- import * as server from "@minecraft/server"
++ import * as server from "@minecraft-ex/server"
 ```
 
 ## **NOTE: This version of this module is still in pre-release.  It may change or it may be removed in future releases.**

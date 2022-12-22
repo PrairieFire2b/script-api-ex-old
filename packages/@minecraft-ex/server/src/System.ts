@@ -38,7 +38,7 @@ Object.assign(server.System.prototype, {
                 if(func && canRun) try {
                     func(...args), startTime = Date.now();
                 } catch(error) {
-                    console.log(`Uncaught ${error}`);
+                    console.error(`Uncaught ${error}`);
                 } else if(!delay || Date.now() - startTime >= delay) func = intervalSchedule[id];
             }
             return this.clearInterval(id);

@@ -1,3 +1,5 @@
+import "./MinecraftDimensionTypes"
+
 export {
     Direction,
     DisplaySlotId,
@@ -57,8 +59,7 @@ export {
     ChatEventSignal,
     Color,
     CommandResult,
-    Container,
-    // ContainerSlot,
+    ContainerSlot,
     DataDrivenEntityTriggerEvent,
     DataDrivenEntityTriggerEventSignal,
     DefinitionModifier,
@@ -132,8 +133,8 @@ export {
     EntityRideableComponent,
     EntityScaleComponent,
     EntitySkinIdComponent,
-    // EntitySpawnEvent,
-    // EntitySpawnEventSignal,
+    EntitySpawnEvent,
+    EntitySpawnEventSignal,
     EntityStrengthComponent,
     EntityTameableComponent,
     EntityType,
@@ -198,16 +199,15 @@ export {
     PlayerJoinEventSignal,
     PlayerLeaveEvent,
     PlayerLeaveEventSignal,
-    // PlayerSpawnEvent,
-    // PlayerSpawnEventSignal,
+    PlayerSpawnEvent,
+    PlayerSpawnEventSignal,
     ProjectileHitEvent,
     ProjectileHitEventSignal,
     PropertyRegistry,
     ScoreboardIdentity,
     ScoreboardScoreInfo,
-    ScreenDisplay,
-    // ScriptEventCommandMessageSignal,
-    // ScriptEventCommandMessageEvent,
+    ScriptEventCommandMessageSignal,
+    ScriptEventCommandMessageEvent,
     Seat,
     ServerMessageSignal,
     StringBlockProperty,
@@ -235,7 +235,8 @@ export type {
     ScriptEventMessageFilterOptions,
     SoundOptions,
     TitleDisplayOptions,
-    Vector3
+    Vector3,
+    RawMessage
 } from "@minecraft/server"
 
 export {
