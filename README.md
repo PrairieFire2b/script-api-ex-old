@@ -6,3 +6,5 @@ Script API Ex
 
 - `@minecraft-ex/client` (**coming soon**)
 - [`@minecraft-ex/server`](packages/@minecraft-ex/server)
+
+## **WARNINGS**: This branch is deprecated.
